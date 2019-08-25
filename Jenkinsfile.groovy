@@ -57,6 +57,12 @@ pipeline{
                 }
             }       
         }
+        stage("Pull Repo"){
+            steps{
+                git("https://github.com/NadiraSaip/packer_terraform.git")
+                sh "ls"
+            }
+        }
     }
 }
 
