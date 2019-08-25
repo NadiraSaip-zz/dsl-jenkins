@@ -39,6 +39,23 @@ pipeline{
                 }
             }
         }
+        stage("Download Packer"){
+            steps{
+                ws("tmp/"){
+                    script {
+                        def exists = fileExists 'packer_1.4.3_linux_amd64.zip'
+                        if (exists) {
+                            sh "unzip -o tpacker_1.4.3_linux_amd64.zip"
+                            sh "sudo mv packer /bin"
+                        } else {
+                            sh "wget https://releases.hashicorp.com/packer/1.4.3/packer_1.4.3_linux_amd64.zip"
+                            sh "unzip -o packer_1.4.3_linux_amd64.zip"
+                            sh "sudo mv packer /bin"
+                        }
+                    }
+                }
+            }       
+        }
     }
 }
 
