@@ -18,7 +18,7 @@ pipeline{
             steps{
                 ws("tmp/"){
                     sh "pwd"
-                    def exists fileExists "terraform_0.12.7_linux_amd64.zip"
+                    def exists = fileExists 'terraform_0.12.7_linux_amd64.zip'
                     if (exists){
                         sh "unzip -o terraform_0.12.7_linux_amd64.zip"
                     } else {
