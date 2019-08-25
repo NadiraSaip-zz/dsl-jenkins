@@ -64,7 +64,9 @@ pipeline{
         }
         stage("Build Image"){
             steps{
-                sh "packer image build updates/ami.json"
+                // sh "packer image build updates/ami.json"
+                echo "Hello"
+
             }
         }
     }
