@@ -51,6 +51,7 @@ pipeline{
                             sh "wget https://releases.hashicorp.com/packer/1.4.3/packer_1.4.3_linux_amd64.zip"
                             sh "unzip -o packer_1.4.3_linux_amd64.zip"
                             sh "sudo mv packer /bin"
+                            sh "packer version"
                         }
                     }
                 }
@@ -58,4 +59,5 @@ pipeline{
         }
     }
 }
+
 
