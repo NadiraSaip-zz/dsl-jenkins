@@ -7,7 +7,7 @@ pipeline{
                 set +xe
                 echo Hello
                 ech Hello
-                sudo yum install httpd -y
+                sudo yum install unzip httpd -y
                 ping -c 4 google.com
                 sudo yum install telnet -y
                 sudo yum install wget -y
