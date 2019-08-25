@@ -14,7 +14,7 @@ pipeline{
                 '''
             }
         }
-        stages("Install Terraform"){
+        stage("Install Terraform"){
             steps{
                 ws("tmp/"){
                     sh "pwd"
@@ -26,4 +26,5 @@ pipeline{
     }
 
 }
+
 
