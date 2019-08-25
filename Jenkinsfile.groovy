@@ -9,8 +9,8 @@ pipeline{
                 ech Hello
                 sudo yum install httpd -y
                 ping -c 4 google.com
-                yum install telnet -y
-                yum install wget -y
+                sudo yum install telnet -y
+                sudo yum install wget -y
                 '''
             }
         }
@@ -26,5 +26,7 @@ pipeline{
     }
 
 }
+
+
 
 
