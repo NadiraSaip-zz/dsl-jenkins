@@ -68,6 +68,12 @@ pipeline{
             }
         }
     }
+        post{
+           succes{
+                mail to: "testsaip1@gmail.com", subject: “job”, body: "job completed"
+           } 
+           
+    }
 
 }
 
