@@ -43,13 +43,13 @@ pipeline{
             steps{
                 ws("tmp/"){
                     script {
-                        def exists = fileExists 'packer_1.4.3_linux_amd64.zip'
+                        def exists = fileExists 'terraform_0.11.9_linux_amd64.zip'
                         if (exists) {
-                            sh "unzip -o packer_1.4.3_linux_amd64.zip"
+                            sh "unzip -o terraform_0.11.9_linux_amd64.zip"
                             sh "sudo mv packer /bin"
                         } else {
-                            sh "wget https://releases.hashicorp.com/packer/1.4.3/packer_1.4.3_linux_amd64.zip"
-                            sh "unzip -o packer_1.4.3_linux_amd64.zip"
+                            sh "wget https://releases.hashicorp.com/terraform/0.11.9/terraform_0.11.9_linux_amd64.zip"
+                            sh "unzip -o terraform_0.11.9_linux_amd64.zip"
                             sh "sudo mv packer /bin"
                             sh "packer version"
                         }
