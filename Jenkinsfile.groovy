@@ -6,11 +6,9 @@ pipeline{
                 sh '''
                 set +xe
                 echo Hello
-                ech Hello
-                sudo yum install unzip httpd -y
+                ech  Error
+                sudo yum install httpd wget unzip -y
                 ping -c 4 google.com
-                sudo yum install telnet -y
-                sudo yum install wget -y
                 '''
             }
         }
@@ -18,24 +16,26 @@ pipeline{
             steps{
                 ws("tmp/"){
                     script {
-                        def exists = fileExists 'terraform_0.12.7_linux_amd64.zip'
+                        def exists = fileExists 'terraform_0.11.9_linux_amd64.zip'
                         if (exists) {
-                            sh "unzip -o terraform_0.12.7_linux_amd64.zip"
+                            sh "unzip -o terraform_0.11.9_linux_amd64.zip"
                             sh "sudo mv -f terraform /bin"
+                            sh "terraform version"
                         } else {
-                            sh "wget https://releases.hashicorp.com/terraform/0.12.7/terraform_0.12.7_linux_amd64.zip"
-                            sh "unzip -o terraform_0.12.7_linux_amd64.zip"
-                            sh "sudo mv -f  terraform /bin"
+                            sh "wget https://releases.hashicorp.com/terraform/0.11.9/terraform_0.11.9_linux_amd64.zip"
+                            sh "unzip -o terraform_0.11.9_linux_amd64.zip"
+                            sh "sudo mv -f terraform /bin"
+                            sh "terraform version"
                         }
                     }
                 }
-            }       
+            }
         }
-        stage("write to a file"){
+        stage("Write to a file"){
             steps{
                 ws("tmp/"){
-                    writeFile text: "Test", file: "Testfileœ"
-
+                    writeFile text: "Test", file: "TestFile"
+                    sh "cat TestFile"
                 }
             }
         }
@@ -43,44 +43,43 @@ pipeline{
             steps{
                 ws("tmp/"){
                     script {
-                        def exists = fileExists 'terraform_0.11.9_linux_amd64.zip'
+                        def exists = fileExists 'packer_1.4.3_linux_amd64.zip'
                         if (exists) {
-                            sh "unzip -o terraform_0.11.9_linux_amd64.zip"
+                            sh "unzip -o packer_1.4.3_linux_amd64.zip"
                             sh "sudo mv packer /bin"
+                            sh "packer version"
                         } else {
-                            sh "wget https://releases.hashicorp.com/terraform/0.11.9/terraform_0.11.9_linux_amd64.zip"
-                            sh "unzip -o terraform_0.11.9_linux_amd64.zip"
+                            sh "wget https://releases.hashicorp.com/packer/1.4.3/packer_1.4.3_linux_amd64.zip"
+                            sh "unzip -o packer_1.4.3_linux_amd64.zip"
                             sh "sudo mv packer /bin"
                             sh "packer version"
                         }
                     }
                 }
-            }       
-        }
-        stage("Pull Repo"){
-            steps{
-                git("https://github.com/NadiraSaip/packer_terraform.git")
             }
         }
         stage("Build Image"){
             steps{
-                // sh "packer image build updates/ami.json"
+                //sh "packer build updated/updated.json"
                 echo "Hello"
-
+            }
+        }
+        stage("Build VPC"){
+            steps{
+                ws("terraform/"){
+                    git "https://github.com/farrukh90/infrastructure_april.git"
+                    sh "pwd"
+                    sh "ls"
+                }
             }
         }
     }
-        post{
-           success {
-               echo "Done"
-           }
-           failure {
-               mail to: "testsaip1@gmail.com", subject: “job”, body: "job completed"
-           }
+    post{
+        success {
+            echo "Done"
         }
-           
+        failure {
+            mail to:  "farrukhsadykov@gmail.com", subject: "job", body: "job completed"
+        }
     }
-
-
-
-
+}
