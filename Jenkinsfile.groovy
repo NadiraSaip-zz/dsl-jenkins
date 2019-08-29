@@ -64,12 +64,19 @@ pipeline{
                 echo "Hello"
             }
         }
-        stage("Build VPC"){
+        stage("Clone VPC Repo"){
             steps{
                 ws("terraform/"){
-                    git "https://github.com/NadiraSaip/infrastructure_april.git"
-                    sh "pwd"
-                    sh "ls"
+                    git "https://github.com/farrukh90/infrastructure_april.git"
+                }
+            }
+        }
+        stage("Build VPC "){
+            steps{
+                ws("terraform/"){
+                    sh "terraform get"
+                    sh "terraform init"
+                    sh "terraform  plan -var-file=dev.tfvars"
                 }
             }
         }
@@ -79,7 +86,7 @@ pipeline{
             echo "Done"
         }
         failure {
-            mail to:  "testsaip1@gmail.com", subject: "job", body: "job completed"
+            mail to:  "farrukhsadykov@gmail.com", subject: "job", body: "job completed"
         }
     }
-}q
+}
